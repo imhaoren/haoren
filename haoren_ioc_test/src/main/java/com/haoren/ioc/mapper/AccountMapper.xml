@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<mapper namespace="com.haoren.ioc.mapper.AccountMapper">
+
+    <select id="selectByCardNo" resultType="com.haoren.ioc.entity.Account">
+        select * from account where id = #{id}
+    </select>
+    <update id="update">
+        update account set money = #{money} where cardNo = #{cardNo}
+    </update>
+</mapper>

@@ -1,0 +1,13 @@
+base:
+  package: com.haoren
+rpc:
+  server:
+    address: 127.0.0.1:9093
+  type: provider
+registry:
+  path: /chenhaoren_rpc
+  address: 127.0.0.1:2181
+server:
+  port: 9090
+  tomcat:
+    max-http-post-size: 8192

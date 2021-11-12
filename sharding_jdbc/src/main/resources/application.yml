@@ -1,0 +1,63 @@
+server:
+  port: 5050
+spring:
+  application:
+    name: sharding_jdbc
+  shardingsphere:
+    props:
+      sql:
+        show: true
+    datasource:
+      names: ds_0,ds_1
+      ds_0:
+        type: com.alibaba.druid.pool.DruidDataSource
+        driver-class-name: com.mysql.jdbc.Driver
+        url: jdbc:mysql://localhost:3306/chenhaoren?useUnicode=true&characterEncoding=utf8&tinyInt1isBit=false&useSSL=false&serverTimezone=UTC
+        username: root
+        password: 123456
+      ds_1:
+        type: com.alibaba.druid.pool.DruidDataSource
+        driver-class-name: com.mysql.jdbc.Driver
+        url: jdbc:mysql://localhost:3306/chendiaosi?useUnicode=true&characterEncoding=utf8&tinyInt1isBit=false&useSSL=false&serverTimezone=UTC
+        username: root
+        password: 123456
+    sharding:
+      default-database-strategy:
+        inline:
+          sharding-column: id
+          algorithm-expression: ds_${1..2}
+      tables:
+        user:
+#          actual-data-nodes: ds${0..1}.user_${0..1}
+          # 生成分布式主键
+          key-generator:
+            #自增列名称，缺省表示不使用自增主键生成器
+            column: id
+            sharding-column: id
+            #自增列值生成器类型，缺省表示使用默认自增列值生成器。可使用用户自定义的列值生成器或选择内置类型：SNOWFLAKE/UUID/LEAF_SEGMENT
+            type: SNOWFLAKE
+          #基于行表达式分片
+#          database-strategy:
+#            inline:
+#              sharding-column: id
+#              algorithm-expression: ds${id % 2}
+          #分表策略
+#          table-strategy:
+#            inline:
+#              sharding-column: id
+              #分片算法行表达式（只取最后两个数字进行分片）
+#              algorithm-expression: user_${id % 4}
+          #基于标准分片策略分片
+          database-strategy:
+            #标准策略下分片算法包含两个 precise + range，range可选，但是如果要用range就必须同precise一起使用
+            standard:
+              sharding-column: id
+              precise-algorithm-class-name: com.haoren.sharding.strategy.PreciseShardingAlgorithmStrategy
+          table-strategy:
+            standard:
+              sharding-column: id
+              precise-algorithm-class-name: com.haoren.sharding.strategy.PreciseShardingAlgorithmStrategy
+
+#mybatis:
+#  configuration:
+#    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl

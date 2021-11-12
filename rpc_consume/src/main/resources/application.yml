@@ -1,0 +1,10 @@
+basePackage: com.haoren
+rpc:
+  server:
+    address: 127.0.0.1:9090
+  type: consume
+registry:
+  path: /chenhaoren_rpc
+  address: 127.0.0.1:2181
+server:
+  port: 9091

@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<configuration>
+    <property name="driverClass" value="com.mysql.jdbc.Driver"/>
+    <property name="jdbcUrl" value="jdbc:mysql://127.0.0.1:3306/chenhaoren?useSSL=false"/>
+    <property name="username" value="root"/>
+    <property name="password" value="123456"/>
+
+    <mapper resource="com/haoren/mybatis/mapper/UserMapper.xml"/>
+</configuration>
